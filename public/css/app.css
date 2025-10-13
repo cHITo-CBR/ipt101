@@ -1,0 +1,56 @@
+/* Global */
+* { box-sizing: border-box; }
+body.login-bg {
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(135deg, #0d6efd 0%, #0aa1ff 60%, #0fb6ff 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Login */
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+.login-card {
+  width: 420px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 20px 40px rgba(0,0,0,.18);
+}
+.login-card-header {
+  background: linear-gradient(135deg, #0d6efd, #2a75ff);
+  color: #fff;
+  padding: 28px 28px 18px;
+  text-align: center;
+}
+.login-card-header h2 {
+  margin: 10px 0 4px;
+  font-weight: 700;
+}
+.login-card-header .subtitle { opacity: .9; font-size: 14px; margin: 0; }
+.logo-circle {
+  width: 56px; height: 56px; border-radius: 12px; background: rgba(255,255,255,.15);
+  display:flex; align-items:center; justify-content:center; font-weight: 800; letter-spacing: 1px;
+  margin: 0 auto;
+}
+.login-card-body { padding: 20px 22px 26px; }
+.input-label { display:block; font-size: 13px; color: #334155; margin: 10px 0 6px; }
+.input { width: 100%; padding: 12px 12px; border: 1px solid #e2e8f0; border-radius: 8px; outline: none; }
+.input:focus { border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(59,130,246,.25); }
+.btn-primary {
+  width: 100%; margin-top: 14px; padding: 10px 14px; border: 0; border-radius: 8px;
+  background: #0d6efd; color: #fff; font-weight: 600; cursor: pointer;
+}
+.btn-primary:disabled { opacity: .75; cursor: not-allowed; }
+.alert-error { margin-top: 10px; background: #fee2e2; color: #991b1b; padding: 8px 10px; border-radius: 8px; font-size: 14px; }
+.demo-box { margin-top: 16px; padding: 10px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; color: #334155; }
+
+/* Home */
+.home-card { background: #fff; padding: 28px; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.1); }
+.home-card h1 { margin-top: 0; }
+
