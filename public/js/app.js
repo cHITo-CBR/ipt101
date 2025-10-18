@@ -81782,6 +81782,11 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.withCredentials = true;
+var token = document.head.querySelector('meta[name="csrf-token"]');
+if (token) {
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+}
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -81820,10 +81825,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -81833,12 +81834,16 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 // Reference: https://github.com/Jovi0125/JV-Profile-Management-Final
 
 
@@ -81847,7 +81852,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-// ---------------------- Data helpers (temporary: localStorage) ----------------------
+// ---------------------- Data helpers (localStorage + API sync) ----------------------
 
 var store = {
   get: function get(key, fallback) {
@@ -81866,120 +81871,152 @@ var store = {
 // Seed demo datasets if empty
 function useSeed() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!store.get('courses')) {
-      store.set('courses', [{
-        id: 1,
-        code: 'BSIT',
-        name: 'Information Technology',
-        status: 'active'
-      }, {
-        id: 2,
-        code: 'BSCS',
-        name: 'Computer Science',
-        status: 'active'
-      }, {
-        id: 3,
-        code: 'BSBA',
-        name: 'Business Administration',
-        status: 'active'
-      }, {
-        id: 4,
-        code: 'BSA',
-        name: 'Accountancy',
-        status: 'active'
-      }]);
-    }
-    if (!store.get('departments')) {
-      store.set('departments', [{
-        id: 1,
-        code: 'CS',
-        name: 'Computer Science',
-        status: 'active'
-      }, {
-        id: 2,
-        code: 'ENG',
-        name: 'Engineering',
-        status: 'active'
-      }, {
-        id: 3,
-        code: 'BUS',
-        name: 'Business',
-        status: 'active'
-      }, {
-        id: 4,
-        code: 'ART',
-        name: 'Arts & Humanities',
-        status: 'active'
-      }, {
-        id: 5,
-        code: 'SCI',
-        name: 'Science',
-        status: 'active'
-      }]);
-    }
-    if (!store.get('academicYears')) {
-      store.set('academicYears', [{
-        id: 1,
-        label: '2024-2025',
-        status: 'active'
-      }, {
-        id: 2,
-        label: '2023-2024',
-        status: 'archived'
-      }]);
-    }
-    if (!store.get('students')) {
-      store.set('students', [{
-        id: 1,
-        studentNo: 'S-0001',
-        name: 'John Doe',
-        courseId: 1,
-        yearLevel: 3,
-        status: 'active'
-      }, {
-        id: 2,
-        studentNo: 'S-0002',
-        name: 'Jane Smith',
-        courseId: 2,
-        yearLevel: 2,
-        status: 'active'
-      }, {
-        id: 3,
-        studentNo: 'S-0003',
-        name: 'Amy Santiago',
-        courseId: 3,
-        yearLevel: 4,
-        status: 'active'
-      }, {
-        id: 4,
-        studentNo: 'S-0004',
-        name: 'Jake Peralta',
-        courseId: 1,
-        yearLevel: 1,
-        status: 'active'
-      }]);
-    }
-    if (!store.get('faculty')) {
-      store.set('faculty', [{
-        id: 1,
-        employeeNo: 'F-1001',
-        name: 'Dr. Sarah Johnson',
-        departmentId: 1,
-        status: 'active'
-      }, {
-        id: 2,
-        employeeNo: 'F-1002',
-        name: 'Prof. Michael Brown',
-        departmentId: 2,
-        status: 'active'
-      }, {
-        id: 3,
-        employeeNo: 'F-1003',
-        name: 'Dr. Anna Garcia',
-        departmentId: 3,
-        status: 'active'
-      }]);
-    }
+    // Try to pull from API; fallback to demo seed if API not available
+    _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+      var _courses$data, _departments$data, _academicYears$data, _students$data, _faculty$data, _yield$Promise$all, _yield$Promise$all2, courses, departments, academicYears, students, faculty, _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            _context.p = 0;
+            _context.n = 1;
+            return Promise.all([axios__WEBPACK_IMPORTED_MODULE_4___default().get('/api/courses'), axios__WEBPACK_IMPORTED_MODULE_4___default().get('/api/departments'), axios__WEBPACK_IMPORTED_MODULE_4___default().get('/api/academic-years'), axios__WEBPACK_IMPORTED_MODULE_4___default().get('/api/students'), axios__WEBPACK_IMPORTED_MODULE_4___default().get('/api/faculty')]);
+          case 1:
+            _yield$Promise$all = _context.v;
+            _yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 5);
+            courses = _yield$Promise$all2[0];
+            departments = _yield$Promise$all2[1];
+            academicYears = _yield$Promise$all2[2];
+            students = _yield$Promise$all2[3];
+            faculty = _yield$Promise$all2[4];
+            store.set('courses', (_courses$data = courses.data) !== null && _courses$data !== void 0 ? _courses$data : []);
+            store.set('departments', (_departments$data = departments.data) !== null && _departments$data !== void 0 ? _departments$data : []);
+            store.set('academicYears', (_academicYears$data = academicYears.data) !== null && _academicYears$data !== void 0 ? _academicYears$data : []);
+            store.set('students', (_students$data = students.data) !== null && _students$data !== void 0 ? _students$data : []);
+            store.set('faculty', (_faculty$data = faculty.data) !== null && _faculty$data !== void 0 ? _faculty$data : []);
+            _context.n = 3;
+            break;
+          case 2:
+            _context.p = 2;
+            _t = _context.v;
+            if (!store.get('courses')) {
+              store.set('courses', [{
+                id: 1,
+                code: 'BSIT',
+                name: 'Information Technology',
+                status: 'active'
+              }, {
+                id: 2,
+                code: 'BSCS',
+                name: 'Computer Science',
+                status: 'active'
+              }, {
+                id: 3,
+                code: 'BSBA',
+                name: 'Business Administration',
+                status: 'active'
+              }, {
+                id: 4,
+                code: 'BSA',
+                name: 'Accountancy',
+                status: 'active'
+              }]);
+            }
+            if (!store.get('departments')) {
+              store.set('departments', [{
+                id: 1,
+                code: 'CS',
+                name: 'Computer Science',
+                status: 'active'
+              }, {
+                id: 2,
+                code: 'ENG',
+                name: 'Engineering',
+                status: 'active'
+              }, {
+                id: 3,
+                code: 'BUS',
+                name: 'Business',
+                status: 'active'
+              }, {
+                id: 4,
+                code: 'ART',
+                name: 'Arts & Humanities',
+                status: 'active'
+              }, {
+                id: 5,
+                code: 'SCI',
+                name: 'Science',
+                status: 'active'
+              }]);
+            }
+            if (!store.get('academicYears')) {
+              store.set('academicYears', [{
+                id: 1,
+                label: '2024-2025',
+                status: 'active'
+              }, {
+                id: 2,
+                label: '2023-2024',
+                status: 'archived'
+              }]);
+            }
+            if (!store.get('students')) {
+              store.set('students', [{
+                id: 1,
+                studentNo: 'S-0001',
+                name: 'John Doe',
+                courseId: 1,
+                yearLevel: 3,
+                status: 'active'
+              }, {
+                id: 2,
+                studentNo: 'S-0002',
+                name: 'Jane Smith',
+                courseId: 2,
+                yearLevel: 2,
+                status: 'active'
+              }, {
+                id: 3,
+                studentNo: 'S-0003',
+                name: 'Amy Santiago',
+                courseId: 3,
+                yearLevel: 4,
+                status: 'active'
+              }, {
+                id: 4,
+                studentNo: 'S-0004',
+                name: 'Jake Peralta',
+                courseId: 1,
+                yearLevel: 1,
+                status: 'active'
+              }]);
+            }
+            if (!store.get('faculty')) {
+              store.set('faculty', [{
+                id: 1,
+                employeeNo: 'F-1001',
+                name: 'Dr. Sarah Johnson',
+                departmentId: 1,
+                status: 'active'
+              }, {
+                id: 2,
+                employeeNo: 'F-1002',
+                name: 'Prof. Michael Brown',
+                departmentId: 2,
+                status: 'active'
+              }, {
+                id: 3,
+                employeeNo: 'F-1003',
+                name: 'Dr. Anna Garcia',
+                departmentId: 3,
+                status: 'active'
+              }]);
+            }
+          case 3:
+            return _context.a(2);
+        }
+      }, _callee, null, [[0, 2]]);
+    }))();
   }, []);
 }
 function useList(key) {
@@ -81996,8 +82033,8 @@ function useList(key) {
 }
 
 // ---------------------- Shared UI ----------------------
-var Sidebar = function Sidebar(_ref) {
-  var onLogout = _ref.onLogout;
+var Sidebar = function Sidebar(_ref2) {
+  var onLogout = _ref2.onLogout;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("aside", {
     className: "sidebar",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
@@ -82014,43 +82051,43 @@ var Sidebar = function Sidebar(_ref) {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
         end: true,
         to: "/",
-        className: function className(_ref2) {
-          var isActive = _ref2.isActive;
+        className: function className(_ref3) {
+          var isActive = _ref3.isActive;
           return "menu-item".concat(isActive ? ' active' : '');
         },
         children: "Dashboard"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
         to: "/faculty",
-        className: function className(_ref3) {
-          var isActive = _ref3.isActive;
+        className: function className(_ref4) {
+          var isActive = _ref4.isActive;
           return "menu-item".concat(isActive ? ' active' : '');
         },
         children: "Faculty"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
         to: "/students",
-        className: function className(_ref4) {
-          var isActive = _ref4.isActive;
+        className: function className(_ref5) {
+          var isActive = _ref5.isActive;
           return "menu-item".concat(isActive ? ' active' : '');
         },
         children: "Students"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
         to: "/reports",
-        className: function className(_ref5) {
-          var isActive = _ref5.isActive;
+        className: function className(_ref6) {
+          var isActive = _ref6.isActive;
           return "menu-item".concat(isActive ? ' active' : '');
         },
         children: "Reports"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
         to: "/settings",
-        className: function className(_ref6) {
-          var isActive = _ref6.isActive;
+        className: function className(_ref7) {
+          var isActive = _ref7.isActive;
           return "menu-item".concat(isActive ? ' active' : '');
         },
         children: "Settings"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
         to: "/profile",
-        className: function className(_ref7) {
-          var isActive = _ref7.isActive;
+        className: function className(_ref8) {
+          var isActive = _ref8.isActive;
           return "menu-item".concat(isActive ? ' active' : '');
         },
         children: "My Profile"
@@ -82096,10 +82133,10 @@ var Topbar = function Topbar() {
     })]
   });
 };
-var MetricCard = function MetricCard(_ref8) {
-  var label = _ref8.label,
-    value = _ref8.value,
-    change = _ref8.change;
+var MetricCard = function MetricCard(_ref9) {
+  var label = _ref9.label,
+    value = _ref9.value,
+    change = _ref9.change;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
     className: "metric-card",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
@@ -82217,8 +82254,8 @@ var DashboardPage = function DashboardPage() {
 };
 
 // ---------------------- Utility components ----------------------
-var Toolbar = function Toolbar(_ref9) {
-  var children = _ref9.children;
+var Toolbar = function Toolbar(_ref0) {
+  var children = _ref0.children;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
     className: "toolbar",
     children: children
@@ -82229,10 +82266,10 @@ var Input = function Input(props) {
     className: "input"
   }, props));
 };
-var Select = function Select(_ref0) {
-  var options = _ref0.options,
-    value = _ref0.value,
-    onChange = _ref0.onChange;
+var Select = function Select(_ref1) {
+  var options = _ref1.options,
+    value = _ref1.value,
+    onChange = _ref1.onChange;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("select", {
     className: "input",
     value: value,
@@ -82276,35 +82313,67 @@ var FacultyPage = function FacultyPage() {
     _useState8 = _slicedToArray(_useState7, 2),
     form = _useState8[0],
     setForm = _useState8[1];
-  var save = function save() {
-    if (!form.name || !form.employeeNo || !form.departmentId) return;
-    if (form.id) {
-      setFaculty(function (prev) {
-        return prev.map(function (i) {
-          return i.id === form.id ? _objectSpread(_objectSpread(_objectSpread({}, i), form), {}, {
-            departmentId: Number(form.departmentId)
-          }) : i;
-        });
-      });
-    } else {
-      var id = Math.max.apply(Math, [0].concat(_toConsumableArray(faculty.map(function (i) {
-        return i.id;
-      })))) + 1;
-      setFaculty(function (prev) {
-        return [].concat(_toConsumableArray(prev), [_objectSpread(_objectSpread({}, form), {}, {
-          id: id,
-          status: 'active',
-          departmentId: Number(form.departmentId)
-        })]);
-      });
-    }
-    setForm({
-      id: null,
-      employeeNo: '',
-      name: '',
-      departmentId: ''
-    });
-  };
+  var save = /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+      var res, updated, _res;
+      return _regenerator().w(function (_context2) {
+        while (1) switch (_context2.n) {
+          case 0:
+            if (!(!form.name || !form.employeeNo || !form.departmentId)) {
+              _context2.n = 1;
+              break;
+            }
+            return _context2.a(2);
+          case 1:
+            if (!form.id) {
+              _context2.n = 3;
+              break;
+            }
+            _context2.n = 2;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().put("/api/faculty/".concat(form.id), {
+              employeeNo: form.employeeNo,
+              name: form.name,
+              departmentId: Number(form.departmentId),
+              status: 'active'
+            });
+          case 2:
+            res = _context2.v;
+            updated = res.data;
+            setFaculty(function (prev) {
+              return prev.map(function (i) {
+                return i.id === updated.id ? updated : i;
+              });
+            });
+            _context2.n = 5;
+            break;
+          case 3:
+            _context2.n = 4;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/faculty', {
+              employeeNo: form.employeeNo,
+              name: form.name,
+              departmentId: Number(form.departmentId)
+            });
+          case 4:
+            _res = _context2.v;
+            setFaculty(function (prev) {
+              return [].concat(_toConsumableArray(prev), [_res.data]);
+            });
+          case 5:
+            setForm({
+              id: null,
+              employeeNo: '',
+              name: '',
+              departmentId: ''
+            });
+          case 6:
+            return _context2.a(2);
+        }
+      }, _callee2);
+    }));
+    return function save() {
+      return _ref10.apply(this, arguments);
+    };
+  }();
   var edit = function edit(item) {
     return setForm({
       id: item.id,
@@ -82313,15 +82382,30 @@ var FacultyPage = function FacultyPage() {
       departmentId: String(item.departmentId)
     });
   };
-  var archive = function archive(id) {
-    return setFaculty(function (prev) {
-      return prev.map(function (i) {
-        return i.id === id ? _objectSpread(_objectSpread({}, i), {}, {
-          status: 'archived'
-        }) : i;
-      });
-    });
-  };
+  var archive = /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(id) {
+      return _regenerator().w(function (_context3) {
+        while (1) switch (_context3.n) {
+          case 0:
+            _context3.n = 1;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("/api/faculty/".concat(id, "/archive"));
+          case 1:
+            setFaculty(function (prev) {
+              return prev.map(function (i) {
+                return i.id === id ? _objectSpread(_objectSpread({}, i), {}, {
+                  status: 'archived'
+                }) : i;
+              });
+            });
+          case 2:
+            return _context3.a(2);
+        }
+      }, _callee3);
+    }));
+    return function archive(_x) {
+      return _ref11.apply(this, arguments);
+    };
+  }();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
     className: "page",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
@@ -82488,38 +82572,70 @@ var StudentsPage = function StudentsPage() {
     _useState12 = _slicedToArray(_useState11, 2),
     form = _useState12[0],
     setForm = _useState12[1];
-  var save = function save() {
-    if (!form.name || !form.studentNo || !form.courseId) return;
-    if (form.id) {
-      setStudents(function (prev) {
-        return prev.map(function (i) {
-          return i.id === form.id ? _objectSpread(_objectSpread(_objectSpread({}, i), form), {}, {
-            courseId: Number(form.courseId),
-            yearLevel: Number(form.yearLevel)
-          }) : i;
-        });
-      });
-    } else {
-      var id = Math.max.apply(Math, [0].concat(_toConsumableArray(students.map(function (i) {
-        return i.id;
-      })))) + 1;
-      setStudents(function (prev) {
-        return [].concat(_toConsumableArray(prev), [_objectSpread(_objectSpread({}, form), {}, {
-          id: id,
-          status: 'active',
-          courseId: Number(form.courseId),
-          yearLevel: Number(form.yearLevel)
-        })]);
-      });
-    }
-    setForm({
-      id: null,
-      studentNo: '',
-      name: '',
-      courseId: '',
-      yearLevel: 1
-    });
-  };
+  var save = /*#__PURE__*/function () {
+    var _ref12 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+      var res, updated, _res2;
+      return _regenerator().w(function (_context4) {
+        while (1) switch (_context4.n) {
+          case 0:
+            if (!(!form.name || !form.studentNo || !form.courseId)) {
+              _context4.n = 1;
+              break;
+            }
+            return _context4.a(2);
+          case 1:
+            if (!form.id) {
+              _context4.n = 3;
+              break;
+            }
+            _context4.n = 2;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().put("/api/students/".concat(form.id), {
+              studentNo: form.studentNo,
+              name: form.name,
+              courseId: Number(form.courseId),
+              yearLevel: Number(form.yearLevel),
+              status: 'active'
+            });
+          case 2:
+            res = _context4.v;
+            updated = res.data;
+            setStudents(function (prev) {
+              return prev.map(function (i) {
+                return i.id === updated.id ? updated : i;
+              });
+            });
+            _context4.n = 5;
+            break;
+          case 3:
+            _context4.n = 4;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/students', {
+              studentNo: form.studentNo,
+              name: form.name,
+              courseId: Number(form.courseId),
+              yearLevel: Number(form.yearLevel)
+            });
+          case 4:
+            _res2 = _context4.v;
+            setStudents(function (prev) {
+              return [].concat(_toConsumableArray(prev), [_res2.data]);
+            });
+          case 5:
+            setForm({
+              id: null,
+              studentNo: '',
+              name: '',
+              courseId: '',
+              yearLevel: 1
+            });
+          case 6:
+            return _context4.a(2);
+        }
+      }, _callee4);
+    }));
+    return function save() {
+      return _ref12.apply(this, arguments);
+    };
+  }();
   var edit = function edit(item) {
     return setForm({
       id: item.id,
@@ -82529,15 +82645,30 @@ var StudentsPage = function StudentsPage() {
       yearLevel: Number(item.yearLevel)
     });
   };
-  var archive = function archive(id) {
-    return setStudents(function (prev) {
-      return prev.map(function (i) {
-        return i.id === id ? _objectSpread(_objectSpread({}, i), {}, {
-          status: 'archived'
-        }) : i;
-      });
-    });
-  };
+  var archive = /*#__PURE__*/function () {
+    var _ref13 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(id) {
+      return _regenerator().w(function (_context5) {
+        while (1) switch (_context5.n) {
+          case 0:
+            _context5.n = 1;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("/api/students/".concat(id, "/archive"));
+          case 1:
+            setStudents(function (prev) {
+              return prev.map(function (i) {
+                return i.id === id ? _objectSpread(_objectSpread({}, i), {}, {
+                  status: 'archived'
+                }) : i;
+              });
+            });
+          case 2:
+            return _context5.a(2);
+        }
+      }, _callee5);
+    }));
+    return function archive(_x2) {
+      return _ref13.apply(this, arguments);
+    };
+  }();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
     className: "page",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
@@ -82814,9 +82945,9 @@ var ReportsPage = function ReportsPage() {
 };
 
 // ---------------------- Pages: Settings ----------------------
-var Tabs = function Tabs(_ref1) {
-  var tab = _ref1.tab,
-    setTab = _ref1.setTab;
+var Tabs = function Tabs(_ref14) {
+  var tab = _ref14.tab,
+    setTab = _ref14.setTab;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
     className: "tabs",
     children: ['courses', 'departments', 'academicYears'].map(function (t) {
@@ -82847,32 +82978,92 @@ var SettingsPage = function SettingsPage() {
     _useList0 = _slicedToArray(_useList9, 2),
     academicYears = _useList0[0],
     setAys = _useList0[1];
-  var addItem = function addItem(collSetter, coll, item) {
-    var id = Math.max.apply(Math, [0].concat(_toConsumableArray(coll.map(function (i) {
-      return i.id;
-    })))) + 1;
-    collSetter(function (prev) {
-      return [].concat(_toConsumableArray(prev), [_objectSpread(_objectSpread({}, item), {}, {
-        id: id
-      })]);
-    });
-  };
-  var updateItem = function updateItem(collSetter, item) {
-    return collSetter(function (prev) {
-      return prev.map(function (i) {
-        return i.id === item.id ? item : i;
-      });
-    });
-  };
-  var archiveItem = function archiveItem(collSetter, id) {
-    return collSetter(function (prev) {
-      return prev.map(function (i) {
-        return i.id === id ? _objectSpread(_objectSpread({}, i), {}, {
-          status: 'archived'
-        }) : i;
-      });
-    });
-  };
+  var addItem = /*#__PURE__*/function () {
+    var _ref15 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(type, collSetter, item) {
+      var endpoints, res;
+      return _regenerator().w(function (_context6) {
+        while (1) switch (_context6.n) {
+          case 0:
+            endpoints = {
+              courses: '/api/courses',
+              departments: '/api/departments',
+              academicYears: '/api/academic-years'
+            };
+            _context6.n = 1;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post(endpoints[type], item);
+          case 1:
+            res = _context6.v;
+            collSetter(function (prev) {
+              return [].concat(_toConsumableArray(prev), [res.data]);
+            });
+          case 2:
+            return _context6.a(2);
+        }
+      }, _callee6);
+    }));
+    return function addItem(_x3, _x4, _x5) {
+      return _ref15.apply(this, arguments);
+    };
+  }();
+  var updateItem = /*#__PURE__*/function () {
+    var _ref16 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(type, collSetter, item) {
+      var endpoints, res;
+      return _regenerator().w(function (_context7) {
+        while (1) switch (_context7.n) {
+          case 0:
+            endpoints = {
+              courses: '/api/courses',
+              departments: '/api/departments',
+              academicYears: '/api/academic-years'
+            };
+            _context7.n = 1;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().put("".concat(endpoints[type], "/").concat(item.id), item);
+          case 1:
+            res = _context7.v;
+            collSetter(function (prev) {
+              return prev.map(function (i) {
+                return i.id === item.id ? res.data : i;
+              });
+            });
+          case 2:
+            return _context7.a(2);
+        }
+      }, _callee7);
+    }));
+    return function updateItem(_x6, _x7, _x8) {
+      return _ref16.apply(this, arguments);
+    };
+  }();
+  var archiveItem = /*#__PURE__*/function () {
+    var _ref17 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(type, collSetter, id) {
+      var endpoints;
+      return _regenerator().w(function (_context8) {
+        while (1) switch (_context8.n) {
+          case 0:
+            endpoints = {
+              courses: '/api/courses',
+              departments: '/api/departments',
+              academicYears: '/api/academic-years'
+            };
+            _context8.n = 1;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default().post("".concat(endpoints[type], "/").concat(id, "/archive"));
+          case 1:
+            collSetter(function (prev) {
+              return prev.map(function (i) {
+                return i.id === id ? _objectSpread(_objectSpread({}, i), {}, {
+                  status: 'archived'
+                }) : i;
+              });
+            });
+          case 2:
+            return _context8.a(2);
+        }
+      }, _callee8);
+    }));
+    return function archiveItem(_x9, _x0, _x1) {
+      return _ref17.apply(this, arguments);
+    };
+  }();
   var renderList = function renderList(items, cols, onEdit, onArchive) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("table", {
       className: "table",
@@ -82929,36 +83120,110 @@ var SettingsPage = function SettingsPage() {
       field2: ''
     });
   };
-  var save = function save() {
-    if (tab === 'courses') {
-      if (!form.field1 || !form.field2) return;
-      var obj = {
-        id: form.id,
-        code: form.field1,
-        name: form.field2,
-        status: 'active'
-      };
-      form.id ? updateItem(setCourses, obj) : addItem(setCourses, courses, obj);
-    } else if (tab === 'departments') {
-      if (!form.field1 || !form.field2) return;
-      var _obj = {
-        id: form.id,
-        code: form.field1,
-        name: form.field2,
-        status: 'active'
-      };
-      form.id ? updateItem(setDepartments, _obj) : addItem(setDepartments, departments, _obj);
-    } else {
-      if (!form.field1) return;
-      var _obj2 = {
-        id: form.id,
-        label: form.field1,
-        status: 'active'
-      };
-      form.id ? updateItem(setAys, _obj2) : addItem(setAys, academicYears, _obj2);
-    }
-    resetForm();
-  };
+  var save = /*#__PURE__*/function () {
+    var _ref18 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9() {
+      var obj, _obj, _obj2;
+      return _regenerator().w(function (_context9) {
+        while (1) switch (_context9.n) {
+          case 0:
+            if (!(tab === 'courses')) {
+              _context9.n = 5;
+              break;
+            }
+            if (!(!form.field1 || !form.field2)) {
+              _context9.n = 1;
+              break;
+            }
+            return _context9.a(2);
+          case 1:
+            obj = {
+              id: form.id,
+              code: form.field1,
+              name: form.field2,
+              status: 'active'
+            };
+            if (!form.id) {
+              _context9.n = 3;
+              break;
+            }
+            _context9.n = 2;
+            return updateItem('courses', setCourses, obj);
+          case 2:
+            _context9.n = 4;
+            break;
+          case 3:
+            _context9.n = 4;
+            return addItem('courses', setCourses, obj);
+          case 4:
+            _context9.n = 14;
+            break;
+          case 5:
+            if (!(tab === 'departments')) {
+              _context9.n = 10;
+              break;
+            }
+            if (!(!form.field1 || !form.field2)) {
+              _context9.n = 6;
+              break;
+            }
+            return _context9.a(2);
+          case 6:
+            _obj = {
+              id: form.id,
+              code: form.field1,
+              name: form.field2,
+              status: 'active'
+            };
+            if (!form.id) {
+              _context9.n = 8;
+              break;
+            }
+            _context9.n = 7;
+            return updateItem('departments', setDepartments, _obj);
+          case 7:
+            _context9.n = 9;
+            break;
+          case 8:
+            _context9.n = 9;
+            return addItem('departments', setDepartments, _obj);
+          case 9:
+            _context9.n = 14;
+            break;
+          case 10:
+            if (form.field1) {
+              _context9.n = 11;
+              break;
+            }
+            return _context9.a(2);
+          case 11:
+            _obj2 = {
+              id: form.id,
+              label: form.field1,
+              status: 'active'
+            };
+            if (!form.id) {
+              _context9.n = 13;
+              break;
+            }
+            _context9.n = 12;
+            return updateItem('academicYears', setAys, _obj2);
+          case 12:
+            _context9.n = 14;
+            break;
+          case 13:
+            _context9.n = 14;
+            return addItem('academicYears', setAys, _obj2);
+          case 14:
+            resetForm();
+          case 15:
+            return _context9.a(2);
+        }
+      }, _callee9);
+    }));
+    return function save() {
+      return _ref18.apply(this, arguments);
+    };
+  }();
   var edit = function edit(item) {
     if (tab === 'courses' || tab === 'departments') setForm({
       id: item.id,
@@ -82981,11 +83246,11 @@ var SettingsPage = function SettingsPage() {
         tab: tab,
         setTab: setTab
       }), tab === 'courses' && renderList(courses, ['code', 'name', 'status'], edit, function (id) {
-        return archiveItem(setCourses, id);
+        return archiveItem('courses', setCourses, id);
       }), tab === 'departments' && renderList(departments, ['code', 'name', 'status'], edit, function (id) {
-        return archiveItem(setDepartments, id);
+        return archiveItem('departments', setDepartments, id);
       }), tab === 'academicYears' && renderList(academicYears, ['label', 'status'], edit, function (id) {
-        return archiveItem(setAys, id);
+        return archiveItem('academicYears', setAys, id);
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "form form-inline",
         children: [tab !== 'academicYears' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
@@ -83108,28 +83373,28 @@ var ProfilePage = function ProfilePage() {
 var AdminShell = function AdminShell() {
   useSeed();
   var onLogout = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var _t;
-      return _regenerator().w(function (_context) {
-        while (1) switch (_context.p = _context.n) {
+    var _ref19 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0() {
+      var _t2;
+      return _regenerator().w(function (_context0) {
+        while (1) switch (_context0.p = _context0.n) {
           case 0:
-            _context.p = 0;
-            _context.n = 1;
+            _context0.p = 0;
+            _context0.n = 1;
             return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/logout');
           case 1:
             window.location.href = '/login';
-            _context.n = 3;
+            _context0.n = 3;
             break;
           case 2:
-            _context.p = 2;
-            _t = _context.v;
+            _context0.p = 2;
+            _t2 = _context0.v;
           case 3:
-            return _context.a(2);
+            return _context0.a(2);
         }
-      }, _callee, null, [[0, 2]]);
+      }, _callee0, null, [[0, 2]]);
     }));
     return function onLogout() {
-      return _ref10.apply(this, arguments);
+      return _ref19.apply(this, arguments);
     };
   }();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
@@ -83188,40 +83453,40 @@ function Login() {
     error = _useState30[0],
     setError = _useState30[1];
   var handleSubmit = /*#__PURE__*/function () {
-    var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(e) {
-      var _err$response, msg, _t2;
-      return _regenerator().w(function (_context2) {
-        while (1) switch (_context2.p = _context2.n) {
+    var _ref20 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(e) {
+      var _err$response, msg, _t3;
+      return _regenerator().w(function (_context1) {
+        while (1) switch (_context1.p = _context1.n) {
           case 0:
             e.preventDefault();
             setLoading(true);
             setError(null);
-            _context2.p = 1;
-            _context2.n = 2;
+            _context1.p = 1;
+            _context1.n = 2;
             return axios__WEBPACK_IMPORTED_MODULE_4___default().post('/login', {
               username: username,
               password: password
             });
           case 2:
             window.location.href = '/admin';
-            _context2.n = 4;
+            _context1.n = 4;
             break;
           case 3:
-            _context2.p = 3;
-            _t2 = _context2.v;
-            msg = (_t2 === null || _t2 === void 0 || (_err$response = _t2.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || 'Invalid credentials.';
+            _context1.p = 3;
+            _t3 = _context1.v;
+            msg = (_t3 === null || _t3 === void 0 || (_err$response = _t3.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || 'Invalid credentials.';
             setError(msg);
           case 4:
-            _context2.p = 4;
+            _context1.p = 4;
             setLoading(false);
-            return _context2.f(4);
+            return _context1.f(4);
           case 5:
-            return _context2.a(2);
+            return _context1.a(2);
         }
-      }, _callee2, null, [[1, 3, 4, 5]]);
+      }, _callee1, null, [[1, 3, 4, 5]]);
     }));
-    return function handleSubmit(_x) {
-      return _ref11.apply(this, arguments);
+    return function handleSubmit(_x10) {
+      return _ref20.apply(this, arguments);
     };
   }();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {

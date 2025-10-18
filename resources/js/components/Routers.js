@@ -6,7 +6,7 @@ import axios from 'axios';
 import 'chart.js/auto';
 import { Bar, Doughnut } from 'react-chartjs-2';
 
-// ---------------------- Data helpers (temporary: localStorage) ----------------------
+// ---------------------- Data helpers (localStorage + API sync) ----------------------
 const store = {
   get(key, fallback) {
     try { const v = JSON.parse(localStorage.getItem(key)); return v ?? fallback; } catch { return fallback; }
@@ -17,44 +17,62 @@ const store = {
 // Seed demo datasets if empty
 function useSeed() {
   useEffect(() => {
-    if (!store.get('courses')) {
-      store.set('courses', [
-        { id: 1, code: 'BSIT', name: 'Information Technology', status: 'active' },
-        { id: 2, code: 'BSCS', name: 'Computer Science', status: 'active' },
-        { id: 3, code: 'BSBA', name: 'Business Administration', status: 'active' },
-        { id: 4, code: 'BSA', name: 'Accountancy', status: 'active' },
-      ]);
-    }
-    if (!store.get('departments')) {
-      store.set('departments', [
-        { id: 1, code: 'CS', name: 'Computer Science', status: 'active' },
-        { id: 2, code: 'ENG', name: 'Engineering', status: 'active' },
-        { id: 3, code: 'BUS', name: 'Business', status: 'active' },
-        { id: 4, code: 'ART', name: 'Arts & Humanities', status: 'active' },
-        { id: 5, code: 'SCI', name: 'Science', status: 'active' },
-      ]);
-    }
-    if (!store.get('academicYears')) {
-      store.set('academicYears', [
-        { id: 1, label: '2024-2025', status: 'active' },
-        { id: 2, label: '2023-2024', status: 'archived' },
-      ]);
-    }
-    if (!store.get('students')) {
-      store.set('students', [
-        { id: 1, studentNo: 'S-0001', name: 'John Doe', courseId: 1, yearLevel: 3, status: 'active' },
-        { id: 2, studentNo: 'S-0002', name: 'Jane Smith', courseId: 2, yearLevel: 2, status: 'active' },
-        { id: 3, studentNo: 'S-0003', name: 'Amy Santiago', courseId: 3, yearLevel: 4, status: 'active' },
-        { id: 4, studentNo: 'S-0004', name: 'Jake Peralta', courseId: 1, yearLevel: 1, status: 'active' },
-      ]);
-    }
-    if (!store.get('faculty')) {
-      store.set('faculty', [
-        { id: 1, employeeNo: 'F-1001', name: 'Dr. Sarah Johnson', departmentId: 1, status: 'active' },
-        { id: 2, employeeNo: 'F-1002', name: 'Prof. Michael Brown', departmentId: 2, status: 'active' },
-        { id: 3, employeeNo: 'F-1003', name: 'Dr. Anna Garcia', departmentId: 3, status: 'active' },
-      ]);
-    }
+    // Try to pull from API; fallback to demo seed if API not available
+    (async () => {
+      try {
+        const [courses, departments, academicYears, students, faculty] = await Promise.all([
+          axios.get('/api/courses'),
+          axios.get('/api/departments'),
+          axios.get('/api/academic-years'),
+          axios.get('/api/students'),
+          axios.get('/api/faculty'),
+        ]);
+        store.set('courses', courses.data ?? []);
+        store.set('departments', departments.data ?? []);
+        store.set('academicYears', academicYears.data ?? []);
+        store.set('students', students.data ?? []);
+        store.set('faculty', faculty.data ?? []);
+      } catch (e) {
+        if (!store.get('courses')) {
+          store.set('courses', [
+            { id: 1, code: 'BSIT', name: 'Information Technology', status: 'active' },
+            { id: 2, code: 'BSCS', name: 'Computer Science', status: 'active' },
+            { id: 3, code: 'BSBA', name: 'Business Administration', status: 'active' },
+            { id: 4, code: 'BSA', name: 'Accountancy', status: 'active' },
+          ]);
+        }
+        if (!store.get('departments')) {
+          store.set('departments', [
+            { id: 1, code: 'CS', name: 'Computer Science', status: 'active' },
+            { id: 2, code: 'ENG', name: 'Engineering', status: 'active' },
+            { id: 3, code: 'BUS', name: 'Business', status: 'active' },
+            { id: 4, code: 'ART', name: 'Arts & Humanities', status: 'active' },
+            { id: 5, code: 'SCI', name: 'Science', status: 'active' },
+          ]);
+        }
+        if (!store.get('academicYears')) {
+          store.set('academicYears', [
+            { id: 1, label: '2024-2025', status: 'active' },
+            { id: 2, label: '2023-2024', status: 'archived' },
+          ]);
+        }
+        if (!store.get('students')) {
+          store.set('students', [
+            { id: 1, studentNo: 'S-0001', name: 'John Doe', courseId: 1, yearLevel: 3, status: 'active' },
+            { id: 2, studentNo: 'S-0002', name: 'Jane Smith', courseId: 2, yearLevel: 2, status: 'active' },
+            { id: 3, studentNo: 'S-0003', name: 'Amy Santiago', courseId: 3, yearLevel: 4, status: 'active' },
+            { id: 4, studentNo: 'S-0004', name: 'Jake Peralta', courseId: 1, yearLevel: 1, status: 'active' },
+          ]);
+        }
+        if (!store.get('faculty')) {
+          store.set('faculty', [
+            { id: 1, employeeNo: 'F-1001', name: 'Dr. Sarah Johnson', departmentId: 1, status: 'active' },
+            { id: 2, employeeNo: 'F-1002', name: 'Prof. Michael Brown', departmentId: 2, status: 'active' },
+            { id: 3, employeeNo: 'F-1003', name: 'Dr. Anna Garcia', departmentId: 3, status: 'active' },
+          ]);
+        }
+      }
+    })();
   }, []);
 }
 
@@ -169,18 +187,32 @@ const FacultyPage = () => {
   ));
 
   const [form, setForm] = useState({ id: null, employeeNo: '', name: '', departmentId: '' });
-  const save = () => {
+  const save = async () => {
     if (!form.name || !form.employeeNo || !form.departmentId) return;
     if (form.id) {
-      setFaculty(prev => prev.map(i => i.id === form.id ? { ...i, ...form, departmentId: Number(form.departmentId) } : i));
+      const res = await axios.put(`/api/faculty/${form.id}`, {
+        employeeNo: form.employeeNo,
+        name: form.name,
+        departmentId: Number(form.departmentId),
+        status: 'active',
+      });
+      const updated = res.data;
+      setFaculty(prev => prev.map(i => i.id === updated.id ? updated : i));
     } else {
-      const id = Math.max(0, ...faculty.map(i=>i.id)) + 1;
-      setFaculty(prev => [...prev, { ...form, id, status: 'active', departmentId: Number(form.departmentId) }]);
+      const res = await axios.post('/api/faculty', {
+        employeeNo: form.employeeNo,
+        name: form.name,
+        departmentId: Number(form.departmentId),
+      });
+      setFaculty(prev => [...prev, res.data]);
     }
     setForm({ id: null, employeeNo: '', name: '', departmentId: '' });
   };
   const edit = (item) => setForm({ id: item.id, employeeNo: item.employeeNo, name: item.name, departmentId: String(item.departmentId) });
-  const archive = (id) => setFaculty(prev => prev.map(i => i.id === id ? { ...i, status: 'archived' } : i));
+  const archive = async (id) => {
+    await axios.post(`/api/faculty/${id}/archive`);
+    setFaculty(prev => prev.map(i => i.id === id ? { ...i, status: 'archived' } : i));
+  };
 
   return (
     <div className="page">
@@ -234,18 +266,34 @@ const StudentsPage = () => {
   ));
 
   const [form, setForm] = useState({ id: null, studentNo: '', name: '', courseId: '', yearLevel: 1 });
-  const save = () => {
+  const save = async () => {
     if (!form.name || !form.studentNo || !form.courseId) return;
     if (form.id) {
-      setStudents(prev => prev.map(i => i.id === form.id ? { ...i, ...form, courseId: Number(form.courseId), yearLevel: Number(form.yearLevel) } : i));
+      const res = await axios.put(`/api/students/${form.id}`, {
+        studentNo: form.studentNo,
+        name: form.name,
+        courseId: Number(form.courseId),
+        yearLevel: Number(form.yearLevel),
+        status: 'active',
+      });
+      const updated = res.data;
+      setStudents(prev => prev.map(i => i.id === updated.id ? updated : i));
     } else {
-      const id = Math.max(0, ...students.map(i=>i.id)) + 1;
-      setStudents(prev => [...prev, { ...form, id, status: 'active', courseId: Number(form.courseId), yearLevel: Number(form.yearLevel) }]);
+      const res = await axios.post('/api/students', {
+        studentNo: form.studentNo,
+        name: form.name,
+        courseId: Number(form.courseId),
+        yearLevel: Number(form.yearLevel),
+      });
+      setStudents(prev => [...prev, res.data]);
     }
     setForm({ id: null, studentNo: '', name: '', courseId: '', yearLevel: 1 });
   };
   const edit = (item) => setForm({ id: item.id, studentNo: item.studentNo, name: item.name, courseId: String(item.courseId), yearLevel: Number(item.yearLevel) });
-  const archive = (id) => setStudents(prev => prev.map(i => i.id === id ? { ...i, status: 'archived' } : i));
+  const archive = async (id) => {
+    await axios.post(`/api/students/${id}/archive`);
+    setStudents(prev => prev.map(i => i.id === id ? { ...i, status: 'archived' } : i));
+  };
 
   return (
     <div className="page">
@@ -346,12 +394,21 @@ const SettingsPage = () => {
   const [departments, setDepartments] = useList('departments');
   const [academicYears, setAys] = useList('academicYears');
 
-  const addItem = (collSetter, coll, item) => {
-    const id = Math.max(0, ...coll.map(i=>i.id)) + 1;
-    collSetter(prev => [...prev, { ...item, id }]);
+  const addItem = async (type, collSetter, item) => {
+    const endpoints = { courses: '/api/courses', departments: '/api/departments', academicYears: '/api/academic-years' };
+    const res = await axios.post(endpoints[type], item);
+    collSetter(prev => [...prev, res.data]);
   };
-  const updateItem = (collSetter, item) => collSetter(prev => prev.map(i=>i.id===item.id? item : i));
-  const archiveItem = (collSetter, id) => collSetter(prev => prev.map(i=>i.id===id? { ...i, status:'archived' } : i));
+  const updateItem = async (type, collSetter, item) => {
+    const endpoints = { courses: '/api/courses', departments: '/api/departments', academicYears: '/api/academic-years' };
+    const res = await axios.put(`${endpoints[type]}/${item.id}`, item);
+    collSetter(prev => prev.map(i=>i.id===item.id? res.data : i));
+  };
+  const archiveItem = async (type, collSetter, id) => {
+    const endpoints = { courses: '/api/courses', departments: '/api/departments', academicYears: '/api/academic-years' };
+    await axios.post(`${endpoints[type]}/${id}/archive`);
+    collSetter(prev => prev.map(i=>i.id===id? { ...i, status:'archived' } : i));
+  };
 
   const renderList = (items, cols, onEdit, onArchive) => (
     <table className="table"><thead><tr>{cols.map(c=> <th key={c}>{c}</th>)}<th></th></tr></thead>
@@ -363,19 +420,19 @@ const SettingsPage = () => {
 
   const [form, setForm] = useState({ id:null, field1:'', field2:'' });
   const resetForm = () => setForm({ id:null, field1:'', field2:'' });
-  const save = () => {
+  const save = async () => {
     if (tab==='courses') {
       if (!form.field1 || !form.field2) return;
       const obj = { id: form.id, code: form.field1, name: form.field2, status:'active' };
-      form.id ? updateItem(setCourses, obj) : addItem(setCourses, courses, obj);
+      form.id ? await updateItem('courses', setCourses, obj) : await addItem('courses', setCourses, obj);
     } else if (tab==='departments') {
       if (!form.field1 || !form.field2) return;
       const obj = { id: form.id, code: form.field1, name: form.field2, status:'active' };
-      form.id ? updateItem(setDepartments, obj) : addItem(setDepartments, departments, obj);
+      form.id ? await updateItem('departments', setDepartments, obj) : await addItem('departments', setDepartments, obj);
     } else {
       if (!form.field1) return;
       const obj = { id: form.id, label: form.field1, status:'active' };
-      form.id ? updateItem(setAys, obj) : addItem(setAys, academicYears, obj);
+      form.id ? await updateItem('academicYears', setAys, obj) : await addItem('academicYears', setAys, obj);
     }
     resetForm();
   };
@@ -389,9 +446,9 @@ const SettingsPage = () => {
       <div className="card">
         <div className="card-title">System Settings</div>
         <Tabs tab={tab} setTab={setTab} />
-        {tab==='courses' && renderList(courses, ['code','name','status'], edit, (id)=>archiveItem(setCourses, id))}
-        {tab==='departments' && renderList(departments, ['code','name','status'], edit, (id)=>archiveItem(setDepartments, id))}
-        {tab==='academicYears' && renderList(academicYears, ['label','status'], edit, (id)=>archiveItem(setAys, id))}
+        {tab==='courses' && renderList(courses, ['code','name','status'], edit, (id)=>archiveItem('courses', setCourses, id))}
+        {tab==='departments' && renderList(departments, ['code','name','status'], edit, (id)=>archiveItem('departments', setDepartments, id))}
+        {tab==='academicYears' && renderList(academicYears, ['label','status'], edit, (id)=>archiveItem('academicYears', setAys, id))}
         <div className="form form-inline">
           {tab!=='academicYears' && <><label>Code</label><Input value={form.field1} onChange={e=>setForm(s=>({...s,field1:e.target.value}))} /><label>Name</label><Input value={form.field2} onChange={e=>setForm(s=>({...s,field2:e.target.value}))} /></>}
           {tab==='academicYears' && <><label>Label</label><Input value={form.field1} onChange={e=>setForm(s=>({...s,field1:e.target.value}))} /></>}
