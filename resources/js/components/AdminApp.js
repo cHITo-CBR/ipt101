@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
+import { Routes, Route, NavLink, Navigate, useNavigate } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import Faculty from './Faculty';
 import Students from './Students';
@@ -23,7 +23,20 @@ const Sidebar = ({ onLogout }) => (
   </aside>
 );
 
-const Topbar = () => (<header className="topbar"><div className="page-title">Dashboard</div><div className="actions"><div className="user-box">Welcome</div></div></header>);
+const Topbar = () => {
+  const navigate = useNavigate();
+  return (
+    <header className="topbar">
+      <div className="page-title">Dashboard</div>
+      <div className="actions">
+        <button className="btn btn--primary" onClick={() => navigate('/students')}>Add Student</button>
+        <button className="btn btn--outline" onClick={() => navigate('/faculty')}>Add Faculty</button>
+        <button className="btn btn--outline" onClick={() => navigate('/reports')}>Reports</button>
+        <div className="user-box">Welcome</div>
+      </div>
+    </header>
+  );
+};
 
 export default function AdminApp() {
   useSeed();
