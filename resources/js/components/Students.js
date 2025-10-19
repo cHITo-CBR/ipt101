@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { store, useList } from './store';
 
 const Toolbar = ({ children }) => (<div className="toolbar">{children}</div>);
@@ -16,18 +17,42 @@ export default function Students() {
 	));
 
 	const [form, setForm] = useState({ id: null, studentNo: '', name: '', courseId: '', yearLevel: 1 });
-	const save = () => {
+	const save = async () => {
 		if (!form.name || !form.studentNo || !form.courseId) return;
 		if (form.id) {
-			setStudents(prev => prev.map(i => i.id === form.id ? { ...i, ...form, courseId: Number(form.courseId), yearLevel: Number(form.yearLevel) } : i));
+			const res = await axios.put(`/api/students/${form.id}`, {
+				studentNo: form.studentNo,
+				name: form.name,
+				courseId: Number(form.courseId),
+				yearLevel: Number(form.yearLevel),
+				status: 'active',
+			});
+			const updated = res.data;
+			setStudents(prev => prev.map(i => i.id === updated.id ? updated : i));
 		} else {
-			const id = Math.max(0, ...students.map(i=>i.id)) + 1;
-			setStudents(prev => [...prev, { ...form, id, status: 'active', courseId: Number(form.courseId), yearLevel: Number(form.yearLevel) }]);
+			const res = await axios.post('/api/students', {
+				studentNo: form.studentNo,
+				name: form.name,
+				courseId: Number(form.courseId),
+				yearLevel: Number(form.yearLevel),
+			});
+			setStudents(prev => [...prev, res.data]);
 		}
 		setForm({ id: null, studentNo: '', name: '', courseId: '', yearLevel: 1 });
 	};
 	const edit = (item) => setForm({ id: item.id, studentNo: item.studentNo, name: item.name, courseId: String(item.courseId), yearLevel: Number(item.yearLevel) });
-	const archive = (id) => setStudents(prev => prev.map(i => i.id === id ? { ...i, status: 'archived' } : i));
+	const archive = async (id) => {
+		await axios.post(`/api/students/${id}/archive`);
+		setStudents(prev => prev.map(i => i.id === id ? { ...i, status: 'archived' } : i));
+	};
+
+	useEffect(() => {
+		const fetchStudents = async () => {
+			const res = await axios.get('/api/students');
+			setStudents(res.data);
+		};
+		fetchStudents();
+	}, []);
 
 	return (
 		<div className="page">

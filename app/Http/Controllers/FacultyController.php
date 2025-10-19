@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Faculty;
+use App\Models\Archive;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FacultyController extends Controller
 {
@@ -72,6 +74,21 @@ class FacultyController extends Controller
     {
         $item = Faculty::findOrFail($id);
         $item->update(['status' => 'archived']);
+
+        Archive::create([
+            'archivable_id' => $item->id,
+            'archivable_type' => 'Faculty',
+            'category' => 'faculty',
+            'data_snapshot' => [
+                'employee_no' => $item->employee_no,
+                'name' => $item->name,
+                'department_id' => (int) $item->department_id,
+            ],
+            'archived_by' => Auth::id(),
+            'archived_at' => now(),
+            'remarks' => 'Archived via API',
+        ]);
+
         return response()->json(['ok' => true]);
     }
 }

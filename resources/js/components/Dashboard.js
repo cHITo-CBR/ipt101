@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import 'chart.js/auto';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { store } from './store';
 

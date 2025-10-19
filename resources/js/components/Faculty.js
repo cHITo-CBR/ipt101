@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { store, useList } from './store';
 
 const Toolbar = ({ children }) => (<div className="toolbar">{children}</div>);
@@ -16,18 +17,40 @@ export default function Faculty() {
 	));
 
 	const [form, setForm] = useState({ id: null, employeeNo: '', name: '', departmentId: '' });
-	const save = () => {
+	const save = async () => {
 		if (!form.name || !form.employeeNo || !form.departmentId) return;
 		if (form.id) {
-			setFaculty(prev => prev.map(i => i.id === form.id ? { ...i, ...form, departmentId: Number(form.departmentId) } : i));
+			const res = await axios.put(`/api/faculty/${form.id}`, {
+				employeeNo: form.employeeNo,
+				name: form.name,
+				departmentId: Number(form.departmentId),
+				status: 'active',
+			});
+			const updated = res.data;
+			setFaculty(prev => prev.map(i => i.id === updated.id ? updated : i));
 		} else {
-			const id = Math.max(0, ...faculty.map(i=>i.id)) + 1;
-			setFaculty(prev => [...prev, { ...form, id, status: 'active', departmentId: Number(form.departmentId) }]);
+			const res = await axios.post('/api/faculty', {
+				employeeNo: form.employeeNo,
+				name: form.name,
+				departmentId: Number(form.departmentId),
+			});
+			setFaculty(prev => [...prev, res.data]);
 		}
 		setForm({ id: null, employeeNo: '', name: '', departmentId: '' });
 	};
 	const edit = (item) => setForm({ id: item.id, employeeNo: item.employeeNo, name: item.name, departmentId: String(item.departmentId) });
-	const archive = (id) => setFaculty(prev => prev.map(i => i.id === id ? { ...i, status: 'archived' } : i));
+	const archive = async (id) => {
+		await axios.post(`/api/faculty/${id}/archive`);
+		setFaculty(prev => prev.map(i => i.id === id ? { ...i, status: 'archived' } : i));
+	};
+
+	useEffect(() => {
+		const fetchFaculty = async () => {
+			const res = await axios.get('/api/faculty');
+			setFaculty(res.data);
+		};
+		fetchFaculty();
+	}, []);
 
 	return (
 		<div className="page">

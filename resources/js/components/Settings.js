@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useList } from './store';
 
 const Tabs = ({ tab, setTab }) => (
@@ -18,12 +19,21 @@ export default function Settings() {
 	const [departments, setDepartments] = useList('departments');
 	const [academicYears, setAys] = useList('academicYears');
 
-	const addItem = (collSetter, coll, item) => {
-		const id = Math.max(0, ...coll.map(i=>i.id)) + 1;
-		collSetter(prev => [...prev, { ...item, id }]);
+	const addItem = async (type, collSetter, item) => {
+		const endpoints = { courses: '/api/courses', departments: '/api/departments', academicYears: '/api/academic-years' };
+		const res = await axios.post(endpoints[type], item);
+		collSetter(prev => [...prev, res.data]);
 	};
-	const updateItem = (collSetter, item) => collSetter(prev => prev.map(i=>i.id===item.id? item : i));
-	const archiveItem = (collSetter, id) => collSetter(prev => prev.map(i=>i.id===id? { ...i, status:'archived' } : i));
+	const updateItem = async (type, collSetter, item) => {
+		const endpoints = { courses: '/api/courses', departments: '/api/departments', academicYears: '/api/academic-years' };
+		const res = await axios.put(`${endpoints[type]}/${item.id}`, item);
+		collSetter(prev => prev.map(i=>i.id===item.id? res.data : i));
+	};
+	const archiveItem = async (type, collSetter, id) => {
+		const endpoints = { courses: '/api/courses', departments: '/api/departments', academicYears: '/api/academic-years' };
+		await axios.post(`${endpoints[type]}/${id}/archive`);
+		collSetter(prev => prev.map(i=>i.id===id? { ...i, status:'archived' } : i));
+	};
 
 	const renderList = (items, cols, onEdit, onArchive) => (
 		<table className="table"><thead><tr>{cols.map(c=> <th key={c}>{c}</th>)}<th></th></tr></thead>
@@ -35,19 +45,19 @@ export default function Settings() {
 
 	const [form, setForm] = useState({ id:null, field1:'', field2:'' });
 	const resetForm = () => setForm({ id:null, field1:'', field2:'' });
-	const save = () => {
+	const save = async () => {
 		if (tab==='courses') {
 			if (!form.field1 || !form.field2) return;
 			const obj = { id: form.id, code: form.field1, name: form.field2, status:'active' };
-			form.id ? updateItem(setCourses, obj) : addItem(setCourses, courses, obj);
+			form.id ? await updateItem('courses', setCourses, obj) : await addItem('courses', setCourses, obj);
 		} else if (tab==='departments') {
 			if (!form.field1 || !form.field2) return;
 			const obj = { id: form.id, code: form.field1, name: form.field2, status:'active' };
-			form.id ? updateItem(setDepartments, obj) : addItem(setDepartments, departments, obj);
+			form.id ? await updateItem('departments', setDepartments, obj) : await addItem('departments', setDepartments, obj);
 		} else {
 			if (!form.field1) return;
 			const obj = { id: form.id, label: form.field1, status:'active' };
-			form.id ? updateItem(setAys, obj) : addItem(setAys, academicYears, obj);
+			form.id ? await updateItem('academicYears', setAys, obj) : await addItem('academicYears', setAys, obj);
 		}
 		resetForm();
 	};
@@ -61,9 +71,9 @@ export default function Settings() {
 			<div className="card">
 				<div className="card-title">System Settings</div>
 				<Tabs tab={tab} setTab={setTab} />
-				{tab==='courses' && renderList(courses, ['code','name','status'], edit, (id)=>archiveItem(setCourses, id))}
-				{tab==='departments' && renderList(departments, ['code','name','status'], edit, (id)=>archiveItem(setDepartments, id))}
-				{tab==='academicYears' && renderList(academicYears, ['label','status'], edit, (id)=>archiveItem(setAys, id))}
+				{tab==='courses' && renderList(courses, ['code','name','status'], edit, (id)=>archiveItem('courses', setCourses, id))}
+				{tab==='departments' && renderList(departments, ['code','name','status'], edit, (id)=>archiveItem('departments', setDepartments, id))}
+				{tab==='academicYears' && renderList(academicYears, ['label','status'], edit, (id)=>archiveItem('academicYears', setAys, id))}
 				<div className="form form-inline">
 					{tab!=='academicYears' && <><label>Code</label><Input value={form.field1} onChange={e=>setForm(s=>({...s,field1:e.target.value}))} /><label>Name</label><Input value={form.field2} onChange={e=>setForm(s=>({...s,field2:e.target.value}))} /></>}
 					{tab==='academicYears' && <><label>Label</label><Input value={form.field1} onChange={e=>setForm(s=>({...s,field1:e.target.value}))} /></>}

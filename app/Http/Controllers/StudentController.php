@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Archive;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -79,6 +81,22 @@ class StudentController extends Controller
     {
         $student = Student::findOrFail($id);
         $student->update(['status' => 'archived']);
+
+        Archive::create([
+            'archivable_id' => $student->id,
+            'archivable_type' => 'Student',
+            'category' => 'student',
+            'data_snapshot' => [
+                'student_no' => $student->student_no,
+                'name' => $student->name,
+                'course_id' => (int) $student->course_id,
+                'year_level' => (int) $student->year_level,
+            ],
+            'archived_by' => Auth::id(),
+            'archived_at' => now(),
+            'remarks' => 'Archived via API',
+        ]);
+
         return response()->json(['ok' => true]);
     }
 }

@@ -7,6 +7,8 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ArchiveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,4 +51,13 @@ Route::get('/faculty', [FacultyController::class, 'index']);
 Route::post('/faculty', [FacultyController::class, 'store']);
 Route::put('/faculty/{id}', [FacultyController::class, 'update']);
 Route::post('/faculty/{id}/archive', [FacultyController::class, 'archive']);
+
+// Reports
+Route::get('/reports', [ReportController::class, 'index']);
+Route::post('/reports', [ReportController::class, 'store']);
+Route::put('/reports/{id}', [ReportController::class, 'update']);
+Route::post('/reports/{id}/archive', [ReportController::class, 'archive']);
+
+// Archives
+Route::get('/archives', [ArchiveController::class, 'index']);
 

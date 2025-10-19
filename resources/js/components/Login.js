@@ -12,8 +12,14 @@ export default function Login({ onSuccess }) {
     setLoading(true);
     setError(null);
     try {
-      await axios.post('/login', { username, password });
-      if (onSuccess) onSuccess();
+      const res = await axios.post('/login', { username, password });
+      if (res?.data?.redirect) {
+        window.location.href = res.data.redirect;
+      } else if (onSuccess) {
+        onSuccess();
+      } else {
+        window.location.href = '/admin';
+      }
     } catch (err) {
       const msg = err?.response?.data?.message || 'Invalid credentials.';
       setError(msg);
