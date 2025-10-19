@@ -1,4 +1,0 @@
-// Admin layout styles (component-level)
-$admin-bg: linear-gradient(90deg, #1e40af, #3b82f6);
-.admin-app { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; background: $admin-bg; }
-.sidebar { background: rgba(255,255,255,0.06); }
